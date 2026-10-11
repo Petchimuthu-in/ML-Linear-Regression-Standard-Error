@@ -1,0 +1,22 @@
+import pandas as pd
+
+df = pd.read_csv("delivery_time.csv")
+print(df)
+
+x = df["Distance_km"]
+y = df["Delivery_Time_min"]
+
+slope = sum((x - x.mean()) * (y - y.mean())) / sum((x - x.mean()) ** 2)
+intercept = y.mean() - slope * x.mean()
+
+predicted = intercept + slope * x
+
+print("Slope:", round(slope, 2))
+print("Intercept:", round(intercept, 2))
+
+error = y - predicted
+
+standard_error = (sum(error ** 2) / (len(df) - 2)) ** 0.5
+
+print("Total Observations:", len(df))
+print("Standard Error:", round(standard_error, 2))
